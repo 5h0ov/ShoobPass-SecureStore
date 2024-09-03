@@ -9,9 +9,6 @@ import { RxAvatar } from "react-icons/rx";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/auth/authSlice.js';
 import { toast } from 'react-toastify';
-import { setThemePreference, getThemePreference } from '../utils/theme.js';
-import { set } from 'mongoose';
-
 
 const Navbar = () => {
     const navigate = useNavigate();
