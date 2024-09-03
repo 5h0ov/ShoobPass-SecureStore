@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://shoob-pass-secure-store.vercel.app/",  // IMPORTANT: this is the port where the backend is running and for the cookie to work this is needed to be declared here
+        target: "https://shoob-pass-secure-store.vercel.app",  // IMPORTANT: this is the port where the backend is running and for the cookie to work this is needed to be declared here
       }
     }
   }
