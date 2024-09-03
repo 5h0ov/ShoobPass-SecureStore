@@ -36,15 +36,22 @@ app.use("/api/pass", passRoutes); // hey express, use the passRoutes for any req
 
 // to serve the frontend in production
 // so with this we can access the react app using the port of the backend
+
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "/frontend/dist"))); // dist is from running build from the package.json in the frontend  and __dirname means under root
+//   app.get("*", (req, res) => {
+//     // for any other routes other than the backend api routes
+//     res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+//     path.resolve(__dirname, "frontend", "build", "index.html");
+//   });
+// }
+
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/frontend/dist"))); // dist is from running build from the package.json in the frontend  and __dirname means under root
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
   app.get("*", (req, res) => {
-    // for any other routes other than the backend api routes
-    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
-    path.resolve(__dirname, "frontend", "build", "index.html");
+    res.sendFile(path.resolve(__dirname, "../frontend/dist", "index.html"));
   });
 }
-
 app.listen(PORT, () => {
   // console.log('Server is running on http://localhost:' + PORT);
   connectDB();
