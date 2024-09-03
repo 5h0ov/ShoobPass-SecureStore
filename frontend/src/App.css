@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* tailwind directives are used to apply custom tailwind classes to the user-made components. */
+
+@layer components{
+    .mycontainer{
+        @apply container px-36 py-16 mx-auto;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: rgba(85, 84, 84, 0.364);
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #161616fb;
+    box-shadow: inset 0 0 5px rgba(128, 128, 128, 0.27);
+    border-radius: 10px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #ffe1fb;
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #edcbfbae
+  }
+  
+  ::-webkit-scrollbar-thumb:active {
+    background: #4b0068ae
+  }
