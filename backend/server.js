@@ -22,7 +22,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173", // hey express, allow requests from this origin
-      "https://shoob-pass-secure-store-kuju-4nb0mxotp-shuvadipta-das-projects.vercel.app/" // Production URL
+      "https://shoob-pass-secure-store-kuju.vercel.app/" // Production URL
     ],
     credentials: true, // hey express, allow cookies to be sent back and forth
   })
