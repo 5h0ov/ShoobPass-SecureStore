@@ -29,13 +29,13 @@ const rateLimiter = (options) => {
 };
 
 export const savePasswordLimiter = rateLimiter({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 5, // Limit each IP to 3 save requests per `window` (here, per 1 minute)
+  windowMs: 0.5 * 60 * 1000, // 30 seconds
+  max: 5, // Limit each IP to 3 save requests per `window` (here, per 30 seconds)
   message: '',
 });
 
 export const retrievePasswordLimiter = rateLimiter({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 5, // Limit each IP to 3 retrieve requests per `window` (here, per 1 minute)
+  windowMs: 0.5 * 60 * 1000, // 30 seconds
+  max: 5, // Limit each IP to 3 retrieve requests per `window` (here, per 30 seconds)
   message: '',
 });
