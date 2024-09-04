@@ -4,8 +4,10 @@
 	"description": "",
 	"main": "server.js",
 	"scripts": {
-    	"start": "node index.js",
-    	"dev": "nodemon index.js"
+		"dev": "NODE_ENV=development nodemon server.js",
+		"start": "NODE_ENV=production node server.js",
+		"build": "npm install && npm install --prefix frontend && npm run build --prefix frontend && node server.js",
+    	"dev:server": "nodemon server.js"
 	},
 	"keywords": [],
 	"author": "",
