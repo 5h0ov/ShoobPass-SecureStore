@@ -134,10 +134,11 @@ export async function login(req, res) {
 
     res.status(200).json({
       success: true,
-      user: {
-        ...user._doc,
-        // password: null, // Dont show password
-      },
+      user : user,
+      // user: {
+      //   ...user._doc,
+      //   // password: null, // Dont show password
+      // },
       message: "User logged in successfully",
     });
   } catch (error) {

@@ -2,6 +2,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const initialState = {
   user: null,
@@ -25,8 +26,7 @@ export const signup = createAsyncThunk('auth/signup', async (credentials, { reje
 
 export const login = createAsyncThunk('auth/login', async (credentials, { rejectWithValue }) => {
   try {
-    const res = await axios.post('/api/auth/login', credentials);
-    console.log(res.data.user);
+    const res = await axios.post(`${API_URL}/api/auth/login`, credentials);
     toast.success('Logged in successfully');
     return res.data.user;
   } catch (error) {
@@ -38,7 +38,7 @@ export const login = createAsyncThunk('auth/login', async (credentials, { reject
 
 export const updateUser = createAsyncThunk('auth/updateUser', async (credentials, { rejectWithValue }) => {
   try {
-    const res = await axios.put('/api/auth/editUser', credentials);
+    const res = await axios.put(`${API_URL}/api/auth/editUser`, credentials);
     toast.success('User updated successfully');
     return res.data.user;
   } catch (error) {
@@ -50,7 +50,7 @@ export const updateUser = createAsyncThunk('auth/updateUser', async (credentials
 
 export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
   try {
-    await axios.post('/api/auth/logout');
+    await axios.post(`${API_URL}/api/auth/logout`);
     toast.success('Logged out successfully');
     return null;
   } catch (error) {
@@ -61,7 +61,8 @@ export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValu
 
 export const getAuth = createAsyncThunk('auth/getAuth', async (_, { rejectWithValue }) => {
   try {
-    const res = await axios.get('/api/auth/getAuth');
+    const res = await axios.get(`${API_URL}/api/auth/getAuth`);
+    console.log("user:",res.data.user);
     return res.data.user;
   } catch (error) {
     return rejectWithValue(error.response.data.message);

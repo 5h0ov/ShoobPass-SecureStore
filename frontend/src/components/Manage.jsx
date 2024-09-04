@@ -187,7 +187,7 @@ const Manage = () => {
 
       console.log('Encrypted passwords:', encryptedPasswords);
   
-      const res = await axios.post('/api/pass/savePasswords',{ passwords: encryptedPasswords });
+      const res = await axios.post(`${API_URL}/api/pass/savePasswords`,{ passwords: encryptedPasswords });
       // console.log('Response:', res.data);
       toast.success('Passwords saved to cloud successfully');
     } catch (error) {
@@ -205,7 +205,8 @@ const Manage = () => {
     }
 
     try {
-      const response = await axios.get('/api/pass/getPasswords');
+      console.log("user:",user)
+      const response = await axios.get(`${API_URL}/api/pass/getPasswords`);
       console.log("Response: ",response)
       const key = await deriveKey(user.password); // Derive key from user's password
       // console.log('Response:', user.password);
@@ -215,7 +216,7 @@ const Manage = () => {
         ...entry,
         password: CryptoJS.AES.decrypt(entry.password, key).toString(CryptoJS.enc.Utf8),
       }));
-
+      console.log('Decrypted passwords:', decryptedPasswords);
       setPasswords(decryptedPasswords);
       localStorage.setItem('passwords', JSON.stringify(decryptedPasswords));
       toast.success('Passwords retrieved from cloud successfully');
