@@ -35,7 +35,7 @@ export async function signup(req, res) {
       return res.status(400).json({ success: false, message: "Invalid email" });
     }
 
-    const exitingUserByEmail = await User.findOne({ email: email }).hint({ email: 1 });
+    const exitingUserByEmail = await User.findOne({ email: email }).lean().hint({ email: 1 });
 
     if (exitingUserByEmail) {
       return res
@@ -55,7 +55,7 @@ export async function signup(req, res) {
         });
     }
 
-    const exitingUserByUsername = await User.findOne({ username: username }).hint({ username: 1 });
+    const exitingUserByUsername = await User.findOne({ username: username }).lean().hint({ username: 1 });
 
     if (exitingUserByUsername) {
       return res
@@ -108,7 +108,7 @@ export async function login(req, res) {
         .json({ success: false, message: "Please fill all fields" });
     }
 
-    const user = await User.findOne({ email: email }).hint({ email: 1 }); // find user by email
+    const user = await User.findOne({ email: email }).lean().hint({ email: 1 }); // find user by email
     if (!user) {
       return res
         .status(400)
