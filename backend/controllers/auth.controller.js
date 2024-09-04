@@ -1,6 +1,7 @@
 import { User } from "../models/modelUser.js";
 import bcrypt from "bcryptjs";
 import { genTokenAndSendCookie } from "../config/generateToken.js";
+import { connectDB } from "../config/db.js";
 // Different controllers for the app
 
 
@@ -21,6 +22,8 @@ export async function editUser(req, res) {
 
 export async function signup(req, res) {
   try {
+    await connectDB();
+
     const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
@@ -100,6 +103,8 @@ export async function signup(req, res) {
 
 export async function login(req, res) {
   try {
+    await connectDB();
+
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -142,6 +147,8 @@ export async function login(req, res) {
 }
 
 export async function logout(req, res) {
+  await connectDB();
+
   try {
     res.clearCookie("jwt-shoobpass");
     res

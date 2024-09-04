@@ -1,12 +1,23 @@
 import mongoose from "mongoose";
-import { ENV_VARS } from "./envVar.js";
 
-export const connectDB = async () => {
+let cachedConnection = null;
+
+export async function connectDB() {
+  if (cachedConnection) {
+    return cachedConnection;
+  }
+
   try {
-    const conn = await mongoose.connect(ENV_VARS.MONGODB_URI);
-    console.log("Database connected successfully: ", conn.connection.host);
+    cachedConnection = await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      socketTimeoutMS: 30000,
+      connectTimeoutMS: 30000,
+    });
+    console.log("Database connected successfully: ", cachedConnection.connection.host);
+    return cachedConnection;
   } catch (error) {
     console.log("Error connecting to database: ", error.message);
-    process.exit(1); // exit with fa    ilure
+    process.exit(1); // exit with failure
   }
-};
+}
