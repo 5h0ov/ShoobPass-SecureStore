@@ -2,12 +2,12 @@
 	"name": "shoobpass",
 	"version": "1.0.0",
 	"description": "",
-	"main": "server.js",
+	"main": "index.js",
 	"scripts": {
-		"dev": "NODE_ENV=development nodemon server.js",
-		"start": "NODE_ENV=production node server.js",
-		"build": "npm install && npm install --prefix frontend && npm run build --prefix frontend && node server.js",
-    	"dev:server": "nodemon server.js"
+		"dev": "NODE_ENV=development nodemon index.js",
+		"start": "NODE_ENV=production node index.js",
+		"build": "npm install && npm install --prefix frontend && npm run build --prefix frontend && node index.js",
+    	"dev:server": "nodemon index.js"
 	},
 	"keywords": [],
 	"author": "",
