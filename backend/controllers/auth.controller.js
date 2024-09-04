@@ -1,54 +1,18 @@
 import { User } from "../models/modelUser.js";
-import express from "express";
 import bcrypt from "bcryptjs";
 import { genTokenAndSendCookie } from "../config/generateToken.js";
 // Different controllers for the app
 
-export async function updateAvatar(req, res) {
-  try {
-    const { avatar } = req.body;
-    // // console.log("avatar: ", avatar);
-    const user = await User.findById(req.user._id);
-    // // console.log("user: ", user);
-    user.avatar = avatar;
-    user.avatarSelectionRequired = false;
-    // // console.log("user.avatar: ", user.avatar);
-    // // console.log("user: ", user);
-    await user.save();
-    res.status(200).json({ success: true, user: user });
-  } catch (error) {
-    // console.log(error.message);
-    res.status(501).json({ success: false, message: "Server Error" });
-  }
-}
 
 export async function editUser(req, res) {
   try {
-    const { username, avatar } = req.body;
+    const { username } = req.body;
     const user = await User.findById(req.user._id);
 
     if (username) user.username = username;
-    if (avatar) user.avatar = avatar;
 
     await user.save();
     res.status(200).json({ success: true, user });
-  } catch (error) {
-    // console.log(error.message);
-    res.status(501).json({ success: false, message: "Server Error" });
-  }
-}
-
-export async function handleSkip(req, res) {
-  try {
-    // const { avatar } = req.body;
-    // // console.log("avatar: ", avatar);
-    const user = await User.findById(req.user._id);
-
-    user.avatarSelectionRequired = false;
-    // // console.log("user.avatar: ", user.avatar);
-    // // console.log("user: ", user);
-    await user.save();
-    res.status(200).json({ success: true, user: user });
   } catch (error) {
     // console.log(error.message);
     res.status(501).json({ success: false, message: "Server Error" });
@@ -71,7 +35,7 @@ export async function signup(req, res) {
       return res.status(400).json({ success: false, message: "Invalid email" });
     }
 
-    const exitingUserByEmail = await User.findOne({ email: email });
+    const exitingUserByEmail = await User.findOne({ email: email }).hint({ email: 1 });
 
     if (exitingUserByEmail) {
       return res
@@ -91,7 +55,7 @@ export async function signup(req, res) {
         });
     }
 
-    const exitingUserByUsername = await User.findOne({ username: username });
+    const exitingUserByUsername = await User.findOne({ username: username }).hint({ username: 1 });
 
     if (exitingUserByUsername) {
       return res
@@ -144,7 +108,7 @@ export async function login(req, res) {
         .json({ success: false, message: "Please fill all fields" });
     }
 
-    const user = await User.findOne({ email: email }); // find user by email
+    const user = await User.findOne({ email: email }).hint({ email: 1 }); // find user by email
     if (!user) {
       return res
         .status(400)
