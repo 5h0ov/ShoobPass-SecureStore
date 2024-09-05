@@ -2,7 +2,6 @@
   "name": "shoobpass-securestore",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://shoob-pass-secure-store-kuju.vercel.app",
   "type": "module",
   "scripts": {
     "dev": "vite",
