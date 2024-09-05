@@ -5,7 +5,11 @@ import Manage from '../components/Manage.jsx'
 import { getThemePreference } from '../utils/theme.js'
 
 const Home = () => {
-  const theme = getThemePreference();
+  const [theme, setTheme] = useState(localStorage.getItem('theme'))
+
+  useEffect(() => {
+    setTheme(getThemePreference())
+  }, [])
 
   return (
     <div >

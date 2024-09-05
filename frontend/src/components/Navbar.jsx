@@ -55,19 +55,16 @@ const Navbar = () => {
         setMobileMenuOpen(!mobileMenuOpen);
     };
 
-    const toggleTheme = () => {
-        if (theme === 'light') {
-            document.documentElement.classList.add('dark')
-            localStorage.setItem('theme', 'dark')
-            setTheme('dark')
-        } else {
-            document.documentElement.classList.remove('dark')
-            localStorage.setItem('theme', 'light')
-            setTheme('light')
-        }
-    };
+    useEffect(() => {
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+      }, [theme]);
     
-       
+      const toggleTheme = () => {
+        const newTheme = theme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+      };
+    
 
   return (
     <nav className='bg-purple-200 '>

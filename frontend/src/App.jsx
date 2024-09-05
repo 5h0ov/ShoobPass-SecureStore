@@ -22,10 +22,11 @@ function App() {
 
   useEffect(() => {
     dispatch(getAuth());
+    if(!localStorage.getItem('theme')){
+      setThemePreference();
+    }
   }, [dispatch]);
-  if(!localStorage.getItem('theme')){
-    setThemePreference();
-  }
+
 
   const theme = getThemePreference();
   console.log('theme:', theme);
