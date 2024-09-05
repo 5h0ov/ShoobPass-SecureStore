@@ -59,13 +59,19 @@ export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValu
   }
 });
 
-export const getAuth = createAsyncThunk('auth/getAuth', async (_, { rejectWithValue }) => {
+export const getAuth = createAsyncThunk('auth/getAuth', async (_, thunkAPI) => {
   try {
-    const res = await axios.get(`${API_URL}/api/auth/getAuth`, credentials);
-    console.log("user:",res.data.user);
-    return res.data.user;
+    const response = await fetch(`${API_URL}/api/auth/getAuth`, {
+      method: 'GET',
+      credentials: 'include', // Include cookies in the request
+    });
+    if (!response.ok) {
+      throw new Error('Unauthorized');
+    }
+    const data = await response.json();
+    return data;
   } catch (error) {
-    return rejectWithValue(error.response.data.message);
+    return thunkAPI.rejectWithValue(error.message);
   }
 });
 
