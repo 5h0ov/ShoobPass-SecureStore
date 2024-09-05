@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/modelUser.js";
 import { ENV_VARS } from "../config/envVar.js";
+import { connectDB } from "../config/db.js";
 
 export const checkUserAuth = async (req, res, next) => {
   try {
