@@ -61,7 +61,9 @@ export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValu
 
 export const getAuth = createAsyncThunk('auth/getAuth', async (_, { rejectWithValue }) => {
   try {
-    const res = await axios.get(`${API_URL}/api/auth/getAuth`);
+    const res = await axios.get(`${API_URL}/api/auth/getAuth`, {
+      withCredentials: true, // Include cookies in the request
+    });
     console.log("user:",res.data.user);
     return res.data.user;
   } catch (error) {

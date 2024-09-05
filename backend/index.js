@@ -1,9 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import path from "path";
+
 
 import authRoutes from "./routes/auth.route.js";
 import passRoutes from "./routes/pass.route.js";
