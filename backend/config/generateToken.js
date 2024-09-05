@@ -17,6 +17,7 @@ export const genTokenAndSendCookie = (userId, res) => {
         // sameSite: "strict",  // cookie is not sent with cross-origin requests, protecting from forgery attacks
         sameSite: "none",  // cookie is sent with cross-origin requests, protecting from forgery attacks
         secure: ENV_VARS.NODE_ENV !== "development",// cookie is only sent over HTTPS, as in dev http is false and in production it is true
+        domain: ENV_VARS.NODE_ENV !== "development" ? "shoob-pass-secure-store.vercel.app" : undefined, // to make it work on subdomains
     });
     
     return token;
