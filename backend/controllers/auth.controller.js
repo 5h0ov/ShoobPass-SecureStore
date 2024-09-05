@@ -130,7 +130,7 @@ export async function login(req, res) {
         .json({ success: false, message: "Invalid Password" });
     }
 
-    const abc = genTokenAndSendCookie(user._id, res);
+    genTokenAndSendCookie(user._id, res);
 
     res.status(200).json({
       success: true,
@@ -140,7 +140,6 @@ export async function login(req, res) {
       //   // password: null, // Dont show password
       // },
       message: "User logged in successfully",
-      abc: abc,
     });
   } catch (error) {
     // console.log(error);
