@@ -28,6 +28,6 @@ export const checkUserAuth = async (req, res, next) => {
     next();
   } catch (error) {
     // console.error(error);
-    res.status(500).json({ success: false, message: "Invalid Token" });
+    res.status(500).json({ success: false, message: "Invalid Token", error: error });
   }
 };
