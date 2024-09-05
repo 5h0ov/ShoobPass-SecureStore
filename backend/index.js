@@ -24,7 +24,6 @@ app.use(
     //   "https://shoob-pass-secure-store-kuju.vercel.app" // Production URL
     // ],
     credentials: true, // hey express, allow cookies to be sent back and forth
-    passwords: true,
   })
 );
 
