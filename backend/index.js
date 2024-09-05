@@ -18,7 +18,10 @@ app.use(express.json()); // hey express, parse incoming requests with JSON paylo
 app.use(cookieParser()); // hey express, parse cookies
 app.use(
   cors({
-    origin: "https://shoob-pass-secure-store-kuju.vercel.app",
+    origin: [
+      "https://shoob-pass-secure-store-kuju.vercel.app",
+      "http://localhost:5173",
+    ],
     // origin: [
     //   "http://localhost:5173", // hey express, allow requests from this origin
     //   "https://shoob-pass-secure-store-kuju.vercel.app" // Production URL
