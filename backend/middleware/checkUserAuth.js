@@ -4,6 +4,7 @@ import { ENV_VARS } from "../config/envVar.js";
 
 export const checkUserAuth = async (req, res, next) => {
   try {
+    await connectDB();
     const token = req.cookies["jwt-shoobpass"];
     if (!token) {
       return res.status(401).json({ success: false, message: "Auth Error" });

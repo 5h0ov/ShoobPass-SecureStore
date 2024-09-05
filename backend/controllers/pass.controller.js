@@ -2,6 +2,7 @@ import { User } from '../models/modelUser.js';
 
 export async function savePasswords(req, res) {
   try {
+    await connectDB();
     // console.log(req.body);
     const { passwords } = req.body;
     // console.log(passwords);
@@ -18,6 +19,7 @@ export async function savePasswords(req, res) {
 
 export async function getPasswords(req, res) {
   try {
+    await connectDB();
     const user = await User.findById(req.user._id);
     res.status(200).json({ success: true, passwords: user.entries });
   } catch (error) {
