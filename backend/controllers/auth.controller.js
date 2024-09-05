@@ -130,7 +130,7 @@ export async function login(req, res) {
         .json({ success: false, message: "Invalid Password" });
     }
 
-    genTokenAndSendCookie(user._id, res);
+    genTokenAndSendCookie(user.email, res);
 
     res.status(200).json({
       success: true,
