@@ -17,7 +17,7 @@ export const signup = createAsyncThunk('auth/signup', async (credentials, { reje
   try {
     const res = await axios.post(`${API_URL}/api/auth/signup`, credentials);
     toast.success('Signup successful!');
-    localStorage.setItem('jwt-shoobpass', response.data.token);
+    localStorage.setItem('jwt-shoobpass', res.data.token);
     return res.data.user;
   } catch (error) {
     toast.error(error.response.data.message || 'Error in Signing up');
@@ -28,7 +28,7 @@ export const signup = createAsyncThunk('auth/signup', async (credentials, { reje
 export const login = createAsyncThunk('auth/login', async (credentials, { rejectWithValue }) => {
   try {
     const res = await axios.post(`${API_URL}/api/auth/login`, credentials);
-    localStorage.setItem('jwt-shoobpass', response.data.token);
+    localStorage.setItem('jwt-shoobpass', res.data.token);
     toast.success('Logged in successfully');
     return res.data.user;
   } catch (error) {
