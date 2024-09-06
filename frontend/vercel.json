@@ -2,7 +2,7 @@
     "rewrites": [
       {
         "source": "/api/(.*)",
-        "destination": "https://your-backend-server.com/api/$1"
+        "destination": "https://shoob-pass-secure-store.vercel.app/api/$1"
       }
     ]
   }
