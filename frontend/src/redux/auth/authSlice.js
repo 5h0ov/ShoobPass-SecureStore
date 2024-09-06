@@ -15,7 +15,7 @@ const initialState = {
 
 export const signup = createAsyncThunk('auth/signup', async (credentials, { rejectWithValue }) => {
   try {
-    const res = await axios.post('/api/auth/signup', credentials);
+    const res = await axios.post(`${API_URL}/api/auth/login`, credentials);
     toast.success('Signup successful!');
     return res.data.user;
   } catch (error) {

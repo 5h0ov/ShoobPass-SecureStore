@@ -19,12 +19,12 @@ app.use(cookieParser()); // hey express, parse cookies
 app.use(
   cors({
     origin: [
-      "https://shoob-pass-secure-store-kuju.vercel.app",
+      "https://shoob-pass-secure-store-wrqx.vercel.app",
       "http://localhost:5173",
     ],
     // origin: [
     //   "http://localhost:5173", // hey express, allow requests from this origin
-    //   "https://shoob-pass-secure-store-kuju.vercel.app" // Production URL
+    //   "https://shoob-pass-secure-store-wrqx.vercel.app" // Production URL
     // ],
     credentials: true, // hey express, allow cookies to be sent back and forth
   })
