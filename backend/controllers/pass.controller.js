@@ -2,9 +2,9 @@ import { User } from '../models/modelUser.js';
 import { connectDB } from '../config/db.js';
 
 export async function savePasswords(req, res) {
+  console.log("req.body:",req.body);
   try {
-    await connectDB();
-    // console.log(req.body);
+    // await connectDB();
     const { passwords } = req.body;
     // console.log(passwords);
     const user = await User.findById(req.user._id);
@@ -20,7 +20,7 @@ export async function savePasswords(req, res) {
 
 export async function getPasswords(req, res) {
   try {
-    await connectDB();
+    // await connectDB();
     const user = await User.findById(req.user._id);
     res.status(200).json({ success: true, passwords: user.entries });
   } catch (error) {

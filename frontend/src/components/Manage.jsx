@@ -188,14 +188,16 @@ const Manage = () => {
       console.log('Encrypted passwords:', encryptedPasswords);
   
       const token = localStorage.getItem('jwt-shoobpass');
-      const res = await axios.post(
-        `${API_URL}/api/pass/savePasswords`,
-        { passwords: encryptedPasswords },
+      console.log(      { passwords: encryptedPasswords },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        })
+
+      const res = await axios.post(
+        `${API_URL}/api/pass/savePasswords`,
+        { passwords: encryptedPasswords },
       );
       // console.log('Response:', res.data);
       toast.success('Passwords saved to cloud successfully');

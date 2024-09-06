@@ -15,7 +15,7 @@ export const checkUserAuth = async (req, res, next) => {
       return res.status(401).json({ success: false, message: "Invalid Token"});
     }
 
-    const user = await User.findById(decoded.userId);
+    const user = await User.findById(decoded.userId).lean().select('_id username email');
 
     if (!user) {
       return res

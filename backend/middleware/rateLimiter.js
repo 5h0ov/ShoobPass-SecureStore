@@ -4,6 +4,7 @@ const rateLimiter = (options) => {
   const { windowMs, max, message } = options;
 
   return (req, res, next) => {
+    console.log("req.ip:",req);
     const ip = req.ip;
     if (!rateLimiters[ip]) {
       rateLimiters[ip] = { count: 1, firstRequestTime: Date.now() };

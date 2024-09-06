@@ -5,7 +5,7 @@ import { savePasswordLimiter, retrievePasswordLimiter } from '../middleware/rate
 
 const router = express.Router();
     
-router.post('/savePasswords', checkUserAuth, savePasswordLimiter, savePasswords);
-router.get('/getPasswords', checkUserAuth, retrievePasswordLimiter, getPasswords);
+router.post('/savePasswords',  savePasswordLimiter, savePasswords);
+router.get('/getPasswords',  retrievePasswordLimiter, getPasswords);
 
 export default router;
