@@ -39,7 +39,7 @@ const SignUp = () => {
         Sign Up
       </h1>
 
-      <form className='space-y-5'onSubmit={handleSignUp} >
+      <form className='space-y-5' onSubmit={handleSignUp} >
           <div>
             <label htmlFor="username" className='text-base text-gray-200 font-medium block'>
               Username
