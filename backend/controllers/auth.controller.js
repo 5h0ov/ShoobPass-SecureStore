@@ -85,7 +85,7 @@ export async function signup(req, res) {
       password: hashPassword,
     });
 
-    genTokenAndSendCookie(newUser._id, res);
+    const token = genTokenAndSendCookie(newUser._id, res);
 
     // test with postman
     await newUser.save();
@@ -96,6 +96,7 @@ export async function signup(req, res) {
         ...newUser._doc, // spread operator to get all the properties of the user
         // password: "", // Dont show password
       },
+      token: token,
     });
   } catch (error) {
     // console.log(error.message);
@@ -131,7 +132,7 @@ export async function login(req, res) {
         .json({ success: false, message: "Invalid Password" });
     }
 
-    genTokenAndSendCookie(user._id, res);
+    const token = genTokenAndSendCookie(user._id, res);
 
     res.status(200).json({
       success: true,
@@ -141,7 +142,7 @@ export async function login(req, res) {
       //   // password: null, // Dont show password
       // },
       message: "User logged in successfully",
-
+      token: token,
     });
   } catch (error) {
     // console.log(error);

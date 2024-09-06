@@ -17,6 +17,7 @@ export const signup = createAsyncThunk('auth/signup', async (credentials, { reje
   try {
     const res = await axios.post(`${API_URL}/api/auth/signup`, credentials);
     toast.success('Signup successful!');
+    localStorage.setItem('jwt-shoobpass', response.data.token);
     return res.data.user;
   } catch (error) {
     toast.error(error.response.data.message || 'Error in Signing up');
@@ -27,6 +28,7 @@ export const signup = createAsyncThunk('auth/signup', async (credentials, { reje
 export const login = createAsyncThunk('auth/login', async (credentials, { rejectWithValue }) => {
   try {
     const res = await axios.post(`${API_URL}/api/auth/login`, credentials);
+    localStorage.setItem('jwt-shoobpass', response.data.token);
     toast.success('Logged in successfully');
     return res.data.user;
   } catch (error) {
@@ -52,6 +54,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValu
   try {
     await axios.post(`${API_URL}/api/auth/logout`);
     toast.success('Logged out successfully');
+    localStorage.removeItem('jwt-shoobpass');
     return null;
   } catch (error) {
     toast.error(error.response.data.message || 'Error in logging out');
@@ -61,10 +64,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValu
 
 export const getAuth = createAsyncThunk('auth/getAuth', async (_, { rejectWithValue }) => {
   try {
-    const res = await fetch(`${API_URL}/api/auth/getAuth`, {
-      method: 'GET',
-      credentials: 'include', // Include cookies in the request
-    });
+    const res = await axios.get(`${API_URL}/api/auth/getAuth`);
     console.log("user:",res.data.user);
     return res.data.user;
   } catch (error) {
