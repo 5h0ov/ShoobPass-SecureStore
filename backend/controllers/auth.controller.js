@@ -135,6 +135,7 @@ export async function login(req, res) {
     res.status(200).json({
       success: true,
       user : user,
+      userId: user._id,
       // user: {
       //   ...user._doc,
       //   // password: null, // Dont show password
