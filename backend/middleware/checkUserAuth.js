@@ -1,11 +1,9 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/modelUser.js";
 import { ENV_VARS } from "../config/envVar.js";
-import { connectDB } from "../config/db.js";
 
 export const checkUserAuth = async (req, res, next) => {
   try {
-    await connectDB();
     const token = req.cookies["jwt-shoobpass"];
     if (!token) {
       return res.status(401).json({ success: false, message: "Auth Error" });

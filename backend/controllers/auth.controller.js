@@ -22,7 +22,7 @@ export async function editUser(req, res) {
 
 export async function signup(req, res) {
   try {
-    await connectDB();
+    // await connectDB();
 
     const { username, email, password } = req.body;
 
@@ -103,7 +103,6 @@ export async function signup(req, res) {
 
 export async function login(req, res) {
   try {
-    await connectDB();
 
     const { email, password } = req.body;
 
@@ -135,7 +134,6 @@ export async function login(req, res) {
     res.status(200).json({
       success: true,
       user : user,
-      userId: user._id,
       // user: {
       //   ...user._doc,
       //   // password: null, // Dont show password
@@ -150,7 +148,6 @@ export async function login(req, res) {
 }
 
 export async function logout(req, res) {
-  await connectDB();
 
   try {
     res.clearCookie("jwt-shoobpass");
