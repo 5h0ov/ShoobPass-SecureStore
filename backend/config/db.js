@@ -11,8 +11,6 @@ export async function connectDB() {
     cachedConnection = await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      socketTimeoutMS: 30000,
-      connectTimeoutMS: 30000,
       maxPoolSize: 10,
     });
     console.log("Database connected successfully: ", cachedConnection.connection.host);
