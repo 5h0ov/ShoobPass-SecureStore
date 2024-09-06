@@ -1,10 +1,7 @@
-import { connectDB } from "../config/db.js";
-
 const rateLimiters = {};
 
 const rateLimiter =  (options) => {
   const { windowMs, max, message } = options;
-  connectDB();
   
   return (req, res, next) => {
 
