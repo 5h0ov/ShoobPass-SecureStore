@@ -13,7 +13,7 @@ export async function connectDB() {
       useUnifiedTopology: true,
       socketTimeoutMS: 30000,
       connectTimeoutMS: 30000,
-      poolSize: 10,
+      maxPoolSize: 10,
     });
     console.log("Database connected successfully: ", cachedConnection.connection.host);
     return cachedConnection;
