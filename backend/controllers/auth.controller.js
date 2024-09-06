@@ -166,7 +166,7 @@ export async function logout(req, res) {
 // Check user is authenticated or not
 export async function getAuth(req, res) {
   try {
-    // await connectDB();
+    await connectDB();
     // console.log("req.user:", req.user);
     res.status(200).json({ success: true, user: req.user });
   } catch (error) {

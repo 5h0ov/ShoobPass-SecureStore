@@ -12,7 +12,7 @@ export const checkUserAuth = async (req, res, next) => {
     const decoded = jwt.verify(token, ENV_VARS.JWT_SECRET);
 
     if (!decoded) {
-      return res.status(401).json({ success: false, message: "Invalid Token", token: token, decoded: decoded });
+      return res.status(401).json({ success: false, message: "Invalid Token"});
     }
 
     const user = await User.findById(decoded.userId);
