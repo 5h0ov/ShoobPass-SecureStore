@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect, useRef } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { FaGithub } from "react-icons/fa";
 import { Tooltip } from 'react-tooltip'
 import { LuLogOut } from "react-icons/lu";
@@ -13,6 +13,13 @@ import { toast } from 'react-toastify';
 const Navbar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
+    const [isAuthPage, setIsAuthPage] = useState(false);
+
+    useEffect(() => {
+        setIsAuthPage(location.pathname === '/login' || location.pathname === '/signup');
+    }, [location]);
+
 
     const { user, isLoggingIn } = useSelector((state) => state.auth);
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -76,7 +83,7 @@ const Navbar = () => {
             <span className='text-green-700 group-hover:text-black'>Pass/&gt;</span>
         </Link>
 
-        <div className="relative md:hidden" ref={dropdownRef}>
+        <div className={`relative md:hidden ${isAuthPage ? 'hidden' : ''}`} ref={dropdownRef}>
                         <span className="avatar cursor-pointer" onClick={toggleDropdown}>
                             {/* Replace with your avatar component */}
                             <RxAvatar className='flex size-10  sm:mb-0 rounded cursor-pointer hover:scale-125 transition-all duration-200 ease-in-out ' id='avatar' />
@@ -119,7 +126,7 @@ const Navbar = () => {
             <li>
                 <Link className='hover:font-bold hover:underline' to='/contact'>Contact</Link>
             </li>
-            <li className="relative" ref={dropdownRef}>
+            <li className={`relative ${isAuthPage ? 'hidden' : ''}`} ref={dropdownRef}>
                         <span className="avatar cursor-pointer" onClick={toggleDropdown}>
                             {/* Replace with your avatar component */}
                             <RxAvatar className='flex size-10  sm:mb-0 rounded cursor-pointer hover:scale-125 transition-all duration-200 ease-in-out ' id='avatar' />

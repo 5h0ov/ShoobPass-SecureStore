@@ -7,6 +7,8 @@ import { connectDB } from "../config/db.js";
 
 export async function editUser(req, res) {
   try {
+    await connectDB();
+
     const { username } = req.body;
     const user = await User.findById(req.user._id);
 
@@ -22,7 +24,7 @@ export async function editUser(req, res) {
 
 export async function signup(req, res) {
   try {
-    // await connectDB();
+    await connectDB();
 
     const { username, email, password } = req.body;
 
@@ -103,7 +105,7 @@ export async function signup(req, res) {
 
 export async function login(req, res) {
   try {
-
+    await connectDB();
     const { email, password } = req.body;
 
     if (!email || !password) {
