@@ -64,7 +64,12 @@ export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValu
 
 export const getAuth = createAsyncThunk('auth/getAuth', async (_, { rejectWithValue }) => {
   try {
-    const res = await axios.get(`${API_URL}/api/auth/getAuth`);
+    const token = localStorage.getItem('jwt-shoobpass');
+    const res = await axios.get(`${API_URL}/auth/getAuth`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log("user:",res.data.user);
     return res.data.user;
   } catch (error) {
