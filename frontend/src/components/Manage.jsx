@@ -187,7 +187,16 @@ const Manage = () => {
 
       console.log('Encrypted passwords:', encryptedPasswords);
   
-      const res = await axios.post(`${API_URL}/api/pass/savePasswords`,{ passwords: encryptedPasswords });
+      const token = localStorage.getItem('jwt-shoobpass');
+      const res = await axios.post(
+        `${API_URL}/api/pass/savePasswords`,
+        { passwords: encryptedPasswords },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       // console.log('Response:', res.data);
       toast.success('Passwords saved to cloud successfully');
     } catch (error) {
@@ -206,8 +215,13 @@ const Manage = () => {
 
     try {
       console.log("user:",user)
-      const response = await axios.get(`${API_URL}/api/pass/getPasswords`);
-      console.log("Response: ",response)
+      const token = localStorage.getItem('jwt-shoobpass');
+      const res = await axios.get(`${API_URL}/api/pass/getPasswords`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Response: ",res)
       const key = await deriveKey(user.password); // Derive key from user's password
       // console.log('Response:', user.password);
       // console.log('Key derived:', key);
