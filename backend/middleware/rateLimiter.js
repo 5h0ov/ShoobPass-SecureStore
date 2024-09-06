@@ -2,9 +2,9 @@ import { connectDB } from "../config/db.js";
 
 const rateLimiters = {};
 
-const rateLimiter = async (options) => {
+const rateLimiter =  (options) => {
   const { windowMs, max, message } = options;
-  await connectDB();
+  connectDB();
   
   return (req, res, next) => {
 
