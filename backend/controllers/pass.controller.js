@@ -1,4 +1,5 @@
 import { User } from '../models/modelUser.js';
+import { connectDB } from '../config/db.js';
 
 export async function savePasswords(req, res) {
   try {

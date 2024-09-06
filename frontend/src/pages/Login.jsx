@@ -28,47 +28,46 @@ const Login = () => {
 
 
   return (
-    <>
-      <div className="absolute top-0 z-[-2] h-screen w-full bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
-      
-      <div className="form flex items-center justify-center mt-20 mx-3">
-          <div className="w-full max-w-md space-y-6 p-8 bg-black/50 rounded-lg shadow-md">
-            <h1 className='text-white text-center font-bold text-3xl mb-4'>
-              Log In
-            </h1>
-
-            <form className='space-y-5' onSubmit={handleLogin} >
-                <div>
-                  <label htmlFor="email" className='text-base text-gray-200 font-medium block'>
-                    Email
-                  </label>
-                  <input type="email" id='email'
-                   className='w-full mt-1 text-white force:outline-none focus:ring-2 border bg-transparent border-gray-600 rounded-md px-3 py-1' placeholder='JohnDoe@gmail.com' value={email} 
-                    onChange={(e) => setEmail(e.target.value)} />
-                </div>
-                <div>
-                  <label htmlFor="password" className='text-base text-gray-200 font-medium block'>
-                    Password
-                  </label>
-                  <input type="password" id='password'
-                   className='w-full mt-1 text-white force:outline-none focus:ring-2 border bg-transparent border-gray-600 rounded-md px-3 py-1' placeholder='••••••••' value={password} onChange={(e) => setPassword(e.target.value)}/>
-                </div>
-
-              <button className='text-white bg-red-600 rounded-md w-full py-2 font-semibold hover:bg-red-700 active:bg-red-900'>Login</button>
-            </form>
-
-            <div className="member text-center text-gray-300">
-              Don't Have an Account? {/* <br/> */}
-            </div>
-
-            <Link to={`/signup?email=${email}`}  className='text-red-500 hover:underline flex justify-center items-center font-semibold  mt-0'> 
-                Sign Up
-              </Link>
-
+    <div className="flex items-center justify-center h-screen min-w-[240px] bg-gray-100 dark:bg-gray-900">
+      <div className="bg-white dark:bg-gray-800 p-8 rounded shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-gray-200">Login</h2>
+        <form onSubmit={handleLogin}>
+          <div className="mb-4">
+            <label className="block text-gray-700 dark:text-gray-300 mb-2" htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 dark:text-gray-300 mb-2" htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            disabled={isLoggingIn}
+          >
+            {isLoggingIn ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
+        <div className="mt-4 text-center">
+          <p className="text-gray-600 dark:text-gray-400">Don't have an account? <Link to={`/signup?email=${email}`} className="text-purple-500 hover:underline">Sign Up</Link></p>
         </div>
-    </>
-  )
+      </div>
+    </div>
+  );
 }
 
 export default Login
