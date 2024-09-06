@@ -1,9 +1,13 @@
+import { connectDB } from "../config/db";
+
 const rateLimiters = {};
 
-const rateLimiter = (options) => {
+const rateLimiter = async (options) => {
   const { windowMs, max, message } = options;
-
+  await connectDB();
+  
   return (req, res, next) => {
+
     console.log("req.ip:",req);
     const ip = req.ip;
     if (!rateLimiters[ip]) {
