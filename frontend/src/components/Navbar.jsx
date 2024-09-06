@@ -76,7 +76,7 @@ const Navbar = () => {
             <span className='text-green-700 group-hover:text-black'>Pass/&gt;</span>
         </Link>
 
-        <div className="relative" ref={dropdownRef}>
+        <div className="relative md:hidden" ref={dropdownRef}>
                         <span className="avatar cursor-pointer" onClick={toggleDropdown}>
                             {/* Replace with your avatar component */}
                             <RxAvatar className='flex size-10  sm:mb-0 rounded cursor-pointer hover:scale-125 transition-all duration-200 ease-in-out ' id='avatar' />
@@ -102,7 +102,7 @@ const Navbar = () => {
                             </div>
                         )}
         </div>
-        
+
         <div className="md:hidden">
                     <button onClick={toggleMobileMenu}>
                         {!mobileMenuOpen ? <GiHamburgerMenu size={24} /> : <GiHamburgerMenu size={24} className='rotate-90 transition-all duration-100 ease-in-out' />}
