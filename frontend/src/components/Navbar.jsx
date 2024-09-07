@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/auth/authSlice.js';
 import { toast } from 'react-toastify';
 
+
 const Navbar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -87,31 +88,32 @@ const Navbar = () => {
                             <RxAvatar className='flex size-10  sm:mb-0 rounded cursor-pointer hover:scale-125 transition-all duration-200 ease-in-out ' id='avatar' />
                             <Tooltip anchorSelect='#avatar' place='bottom'>User</Tooltip>
                         </span>
-                        {dropdownOpen && (
-                            <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
-                                {checkingAuth ? (
-                        <div className="py-1">
-                            <span className="flex items-center px-4 py-2 text-gray-700">
-                                Please Wait...
-                            </span>
-                        </div>
-                    ) : user ? (
-                        <div className="py-1">
-                            <span className="log-out flex items-center px-4 py-2 text-gray-700">
-                                {`Hello ${user.username},`}
-                            </span>
-                            <span className="log-out flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer" onClick={handleLogOut}>
-                                <LuLogOut className='mr-2' /> Log Out
-                            </span>
-                        </div>
-                    ) : (
-                        <div className="py-1">
-                            <Link to="/login" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleDropdown}>Login</Link>
-                            <Link to="/signup" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleDropdown}>Sign Up</Link>
-                        </div>
-                    )}
+                        
+                    {dropdownOpen && (
+                                <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
+                                    {checkingAuth ? (
+                            <div className="py-1">
+                                <span className="flex items-center px-4 py-2 text-gray-700">
+                                    Please Wait...
+                                </span>
+                            </div>
+                        ) : user ? (
+                            <div className="py-1">
+                                <span className="log-out flex items-center px-4 py-2 text-gray-700">
+                                    {`Hello ${user.username},`}
+                                </span>
+                                <span className="log-out flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer" onClick={handleLogOut}>
+                                    <LuLogOut className='mr-2' /> Log Out
+                                </span>
+                            </div>
+                        ) : (
+                            <div className="py-1">
+                                <Link to="/login" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleDropdown}>Login</Link>
+                                <Link to="/signup" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleDropdown}>Sign Up</Link>
                             </div>
                         )}
+                                </div>
+                    )}
         </div> 
 
         <div className="md:hidden">
@@ -164,13 +166,15 @@ const Navbar = () => {
 
             </li> */}
         <li className="flex items-center">
-          <button
+          <button id='theme-toggle'
             onClick={toggleTheme}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 hover:bg-gray-700 active:bg-black hover:scale-110 transition-all duration-150 ease-in-out "
           >
             {theme === 'light' ? '🌜' : '🌞'}
           </button>
+          <Tooltip anchorSelect='#theme-toggle' place='bottom'>Change Theme to {theme==='light' ? 'Dark' : 'Light'}</Tooltip>
         </li>
+
             <li className='flex flex-row gap-2 px-2 py-2 ml-0 rounded-md bg-blue-950 text-white  hover:bg-slate-900'>
                 <Link className='flex flex-row gap-2' to='https://github.com/5h0ov/ShoobPass-SecureStore' target='_blank'>
                     <FaGithub className='hover:scale-110 transition-all duration-150 ease-in-out size-7'/><span>Contribute Here!</span>
@@ -179,7 +183,7 @@ const Navbar = () => {
         </ul>
 
         {mobileMenuOpen && (
-                <div className="absolute right-0 mt-48 w-48 bg-white border rounded-md shadow-lg">
+                <div className="absolute right-0 mt-72 w-48 bg-white border rounded-md shadow-lg">
 
                     <div className="py-1">
                         {!isLoggingIn ? (
@@ -187,9 +191,19 @@ const Navbar = () => {
                             <Link to="/" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" >Home</Link>
                             <Link to="/" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" >About</Link>
                             <Link to="/" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" >Contact Us</Link>
-                            <Link className='flex flex-row gap-2' to='https:\\www.hi.com' target='_blank'>
+                            <Link className='flex flex-row gap-2 justify-center mt-6' to='https:\\www.hi.com' target='_blank'>
                             <FaGithub className='hover:scale-110 transition-all duration-150 ease-in-out size-7'/><span>Contribute Here!</span>
                             </Link>
+                            <div className="flex items-center  justify-center mt-4 mb-2">
+                                <button id='theme-toggle'
+                                    onClick={toggleTheme}
+                                    className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 hover:bg-gray-700 active:bg-black hover:scale-110 transition-all duration-150 ease-in-out "
+                                >
+                                    {theme === 'light' ? '🌜' : '🌞'}
+                                </button>
+                                <Tooltip anchorSelect='#theme-toggle' place='bottom'>Change Theme to {theme==='light' ? 'Dark' : 'Light'}</Tooltip>
+                            </div>
+
                             </>
                     ) : (
                         <Link className='flex flex-row gap-2' to='https:\\www.hi.com' target='_blank'>
