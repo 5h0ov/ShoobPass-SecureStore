@@ -21,7 +21,6 @@ const SignUp = () => {
       const res = await dispatch(signup({ username, email, password })).unwrap();  // without unwrap we will have to manually get payload and would need to know action's fulfilled and rejected states manually, unwrap here simplifies this by directly giving you the payload or throwing an error
 
       console.log('Signup Successful');
-      console.log("res: ", res);
       navigate('/');
     } catch (error) {
       console.log('Signup failed:', error);

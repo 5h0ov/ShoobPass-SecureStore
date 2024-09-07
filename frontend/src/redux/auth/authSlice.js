@@ -29,6 +29,7 @@ export const login = createAsyncThunk('auth/login', async (credentials, { reject
   try {
     const res = await axios.post(`${API_URL}/api/auth/login`, credentials);
     localStorage.setItem('jwt-shoobpass', res.data.token);
+    // console.log("res.data.user:",res.data.user);
     toast.success('Logged in successfully');
     return res.data.user;
   } catch (error) {

@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/auth/authSlice.js';
+import { toast } from 'react-toastify';
 
 
 const Login = () => {
@@ -23,6 +24,7 @@ const Login = () => {
       navigate('/');
     } catch (error) {
       console.log('Login failed:', error);
+      toast.error(error);
     }
   };
 

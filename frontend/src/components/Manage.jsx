@@ -12,6 +12,7 @@ import { MdCancel } from "react-icons/md";
 import { BsCloudArrowUpFill } from "react-icons/bs";
 import { FaCloudArrowDown } from "react-icons/fa6";
 import { useSelector, useDispatch } from 'react-redux'
+import { setSaving, setRetrieving } from '../redux/loading/loadingSlice.js';
 import { toast } from 'react-toastify';
 import { Tooltip } from 'react-tooltip'
 import { v4 as uuidv4 } from 'uuid'
@@ -65,8 +66,7 @@ const Manage = () => {
   useEffect(() => {
     let passwords = (JSON.parse(localStorage.getItem('passwords'))) || [];
     setPasswords(passwords);
-    console.log(passwords);
-  }, [user])
+  }, [])
 
   const deleteEntry = () => {
     let newPasswords = passwords.filter((item) => item.id != deleteId);
@@ -105,7 +105,6 @@ const Manage = () => {
       }
       localStorage.setItem('passwords', JSON.stringify(newPasswords));
       setPasswords(newPasswords);
-      console.log(passwords)
       toast.success('Password Saved Successfully');
     } 
     else {
@@ -148,8 +147,7 @@ const Manage = () => {
     );
 
     const salt = 16; 
-    // console.log('Salt:', salt);
-    
+
     const key = await window.crypto.subtle.deriveKey(
       { 
         name: 'PBKDF2',
@@ -176,9 +174,8 @@ const Manage = () => {
     if (!confirm) return;
 
     try {
-      // console.log('Deriving key...');
+      console.log('Deriving key...');
       const key = await deriveKey(user.password); // Derive key from user's password
-      // console.log('Key derived:', key);
 
       const encryptedPasswords = passwords.map((entry) => ({
         ...entry,
@@ -188,16 +185,22 @@ const Manage = () => {
       console.log('Encrypted passwords:', encryptedPasswords);
   
       const token = localStorage.getItem('jwt-shoobpass');
-      console.log(      { passwords: encryptedPasswords },
+      // console.log(      { passwords: encryptedPasswords },
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   })
+      dispatch(setSaving(true));
+      const API_URL = import.meta.env.VITE_API_URL;
+      const res = await axios.post(
+        `${API_URL}/api/pass/savePasswords`,
+        { passwords: encryptedPasswords },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        })
-
-      const res = await axios.post(
-        `${API_URL}/api/pass/savePasswords`,
-        { passwords: encryptedPasswords },
+        }
       );
       // console.log('Response:', res.data);
       toast.success('Passwords saved to cloud successfully');
@@ -208,6 +211,9 @@ const Manage = () => {
         toast.error('An error occurred while saving passwords.');
       }
     }
+    finally {
+      dispatch(setSaving(false));
+    }
   };
 
   const retrieveFromCloud = async () => {
@@ -216,14 +222,20 @@ const Manage = () => {
     }
 
     try {
-      console.log("user:",user)
+      // console.log("user:",user)
       const token = localStorage.getItem('jwt-shoobpass');
-      const res = await axios.get(`${API_URL}/api/pass/getPasswords`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+
+      dispatch(setRetrieving(true));
+      const API_URL = import.meta.env.VITE_API_URL;
+      const response = await axios.post(`${API_URL}/api/pass/getPasswords`, 
+        {userId: user._id}, 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
       });
-      console.log("Response: ",res)
+      // console.log("Response: ",response)
+      
       const key = await deriveKey(user.password); // Derive key from user's password
       // console.log('Response:', user.password);
       // console.log('Key derived:', key);
@@ -232,7 +244,7 @@ const Manage = () => {
         ...entry,
         password: CryptoJS.AES.decrypt(entry.password, key).toString(CryptoJS.enc.Utf8),
       }));
-      console.log('Decrypted passwords:', decryptedPasswords);
+      // console.log('Decrypted passwords:', decryptedPasswords);
       setPasswords(decryptedPasswords);
       localStorage.setItem('passwords', JSON.stringify(decryptedPasswords));
       toast.success('Passwords retrieved from cloud successfully');
@@ -244,8 +256,24 @@ const Manage = () => {
         toast.error('An error occurred while retrieving passwords.');
       }
     }
+    finally {
+      dispatch(setRetrieving(false));
+    }
   };
 
+  const { isSaving, isRetrieving } = useSelector((state) => state.loading);
+
+  useEffect(() => {
+    if (isSaving) {
+      toast.info('Saving Entries...');
+    }
+  }, [isSaving]);
+
+  useEffect(() => {
+    if (isRetrieving) {
+      toast.info('Retrieving Entries...');
+    }
+  }, [isRetrieving]);
 
   
   return (

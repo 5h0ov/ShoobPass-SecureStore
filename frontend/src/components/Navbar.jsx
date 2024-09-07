@@ -21,7 +21,7 @@ const Navbar = () => {
     }, [location]);
 
 
-    const { user, isLoggingIn } = useSelector((state) => state.auth);
+    const { user, isLoggingIn, checkingAuth } = useSelector((state) => state.auth);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const dropdownRef = useRef(null); // to handle if user clicks outside the dropdown
@@ -45,7 +45,6 @@ const Navbar = () => {
   
 
     const handleLogOut = () => {
-        console.log('user:', user);
         if(user){
             dispatch(logout())
         }else{
@@ -83,32 +82,37 @@ const Navbar = () => {
             <span className='text-green-700 group-hover:text-black'>Pass/&gt;</span>
         </Link>
 
-        <div className={`relative md:hidden ${isAuthPage ? 'hidden' : ''}`} ref={dropdownRef}>
+         <div className={`relative md:hidden ${isAuthPage ? 'hidden' : ''}`} ref={dropdownRef}>
                         <span className="avatar cursor-pointer" onClick={toggleDropdown}>
-                            {/* Replace with your avatar component */}
                             <RxAvatar className='flex size-10  sm:mb-0 rounded cursor-pointer hover:scale-125 transition-all duration-200 ease-in-out ' id='avatar' />
                             <Tooltip anchorSelect='#avatar' place='bottom'>User</Tooltip>
                         </span>
                         {dropdownOpen && (
                             <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
-                                {user ? (
-                                    <div className="py-1">
-                                        <span className="log-out flex items-center px-4 py-2 text-gray-700">
-                                           {`Hello ${user.username},`}
-                                        </span>
-                                        <span className="log-out flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer" onClick={handleLogOut}>
-                                            <LuLogOut className='mr-2' /> Log Out
-                                        </span>
-                                    </div>
-                                ) : (
-                                    <div className="py-1">
-                                        <Link to="/login" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleDropdown}>Login</Link>
-                                        <Link to="/signup" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleDropdown}>Sign Up</Link>
-                                    </div>
-                                )}
+                                {checkingAuth ? (
+                        <div className="py-1">
+                            <span className="flex items-center px-4 py-2 text-gray-700">
+                                Please Wait...
+                            </span>
+                        </div>
+                    ) : user ? (
+                        <div className="py-1">
+                            <span className="log-out flex items-center px-4 py-2 text-gray-700">
+                                {`Hello ${user.username},`}
+                            </span>
+                            <span className="log-out flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer" onClick={handleLogOut}>
+                                <LuLogOut className='mr-2' /> Log Out
+                            </span>
+                        </div>
+                    ) : (
+                        <div className="py-1">
+                            <Link to="/login" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleDropdown}>Login</Link>
+                            <Link to="/signup" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleDropdown}>Sign Up</Link>
+                        </div>
+                    )}
                             </div>
                         )}
-        </div>
+        </div> 
 
         <div className="md:hidden">
                     <button onClick={toggleMobileMenu}>
