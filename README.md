@@ -1,6 +1,6 @@
-# ShoobPass - Personalized Password Manager
+# ShoobPass - Personalized Secure Password Manager
 
-ShoobPass is a secure and personalized password manager built with React and Vite. It allows users to store and manage their passwords securely using advanced cryptographic techniques.
+ShoobPass is a secure and personalized password manager built with React and Vite. It allows users to store and manage their passwords securely using advanced cryptographic techniques. User might not want to create an account to save to cloud if he/she wishes to do so. Password entries are saved directly to your Local Storage for quick and efficient retrieval. Cloud Saving is completely optional.
 
 ## Features
 
@@ -9,13 +9,16 @@ ShoobPass is a secure and personalized password manager built with React and Vit
 - User authentication and authorization
 - Securely(using user's uniquely hashed password) Save and retrieve password entries to/from the cloud
 - Responsive and user-friendly interface
+- Pagination for organizing many entries
 
 ## Basic Encryption & Decryption
 
-ShoobPass uses cryptographic techniques to ensure the security of your password entries.
+ShoobPass uses small-scale cryptographic techniques to ensure the security of your password entries.
 
 ### Key Derivation
-In this process, I have used PBKDF2 (Password-Based Key Derivation Function 2) algorithm to generate a secured key from the user's hashed password.
+In this process, I have used PBKDF2 (Password-Based Key Derivation Function 2) algorithm to generate a secured key from the user's hashed password using crypto-js.
+
+More Info about the npm package: [CryptoJS Docs](https://cryptojs.gitbook.io/docs)
 
 #### Step-by-Step Key Derivation
 Encoding the Password:
@@ -29,9 +32,7 @@ Encoding the Password:
 - Locally populating the decrypted entries in the passwords localstorage item.
 - Retrieval Over.
 
-## How To Run Locally?
-
-# How to Run it Locally?
+## How to Run it Locally?
 
 - Clone this repo to your local system
 - go to the env template file provided in the repo and paste your own api keys and mongodb uri to make it work in local host

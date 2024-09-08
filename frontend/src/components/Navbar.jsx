@@ -23,27 +23,12 @@ const Navbar = () => {
 
 
     const { user, isLoggingIn, checkingAuth } = useSelector((state) => state.auth);
-    const [dropdownOpen, setDropdownOpen] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const dropdownRef = useRef(null); // to handle if user clicks outside the dropdown
     const [theme, setTheme] = useState(localStorage.getItem('theme'));
-
-
-    
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setDropdownOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    if (dropdownOpen) {
-      document.addEventListener('click', handleClickOutside);
-    } else {
-      document.removeEventListener('click', handleClickOutside);
-    }
- }, [dropdownOpen]);
-  
+    const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+    const [desktopDropdownOpen, setDesktopDropdownOpen] = useState(false);
+    const mobileDropdownRef = useRef(null);
+    const desktopDropdownRef = useRef(null);
 
     const handleLogOut = () => {
         if(user){
@@ -51,16 +36,54 @@ const Navbar = () => {
         }else{
             toast.error('You are not logged in');
         }
-        toggleDropdown();
+        if(mobileDropdownOpen){
+            setMobileDropdownOpen(false);
+        }
+        else if(desktopDropdownOpen){
+            setDesktopDropdownOpen(false);
+        }
     }
-
-    const toggleDropdown = () => {
-        setDropdownOpen(!dropdownOpen);
-    };
 
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!mobileMenuOpen);
     };
+
+    const toggleMobileDropdown = () => {
+        setMobileDropdownOpen(!mobileDropdownOpen);
+    };
+
+    const toggleDesktopDropdown = () => {
+        setDesktopDropdownOpen(!desktopDropdownOpen);
+    };
+
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (mobileDropdownRef.current && !mobileDropdownRef.current.contains(event.target)) {
+                setMobileDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [mobileDropdownRef]);
+
+    // Close the desktop dropdown if clicked outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (desktopDropdownRef.current && !desktopDropdownRef.current.contains(event.target)) {
+                setDesktopDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [desktopDropdownRef]);
+
 
     useEffect(() => {
         document.documentElement.classList.toggle('dark', theme === 'dark');
@@ -83,13 +106,13 @@ const Navbar = () => {
             <span className='text-green-700 group-hover:text-black'>Pass/&gt;</span>
         </Link>
 
-         <div className={`relative md:hidden ${isAuthPage ? 'hidden' : ''}`} ref={dropdownRef}>
-                        <span className="avatar cursor-pointer" onClick={toggleDropdown}>
+         <div className={`relative md:hidden ${isAuthPage ? 'hidden' : ''}`} ref={mobileDropdownRef}>
+                        <span className="avatar cursor-pointer" onClick={toggleMobileDropdown}>
                             <RxAvatar className='flex size-10  sm:mb-0 rounded cursor-pointer hover:scale-125 transition-all duration-200 ease-in-out ' id='avatar' />
                             <Tooltip anchorSelect='#avatar' place='bottom'>User</Tooltip>
                         </span>
                         
-                    {dropdownOpen && (
+                    {mobileDropdownOpen && (
                                 <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
                                     {checkingAuth ? (
                             <div className="py-1">
@@ -108,11 +131,11 @@ const Navbar = () => {
                             </div>
                         ) : (
                             <div className="py-1">
-                                <Link to="/login" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleDropdown}>Login</Link>
-                                <Link to="/signup" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleDropdown}>Sign Up</Link>
+                                <Link to="/login" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleMobileDropdown}>Login</Link>
+                                <Link to="/signup" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleMobileDropdown}>Sign Up</Link>
                             </div>
                         )}
-                                </div>
+                    </div>
                     )}
         </div> 
 
@@ -132,31 +155,37 @@ const Navbar = () => {
             <li>
                 <Link className='hover:font-bold hover:underline' to='/contact'>Contact</Link>
             </li>
-            <li className={`relative ${isAuthPage ? 'hidden' : ''}`} ref={dropdownRef}>
-                        <span className="avatar cursor-pointer" onClick={toggleDropdown}>
+            <li className={`relative ${isAuthPage ? 'hidden' : ''}`} ref={desktopDropdownRef}>
+                        <span className="avatar cursor-pointer" onClick={toggleDesktopDropdown}>
                             {/* Replace with your avatar component */}
                             <RxAvatar className='flex size-10  sm:mb-0 rounded cursor-pointer hover:scale-125 transition-all duration-200 ease-in-out ' id='avatar' />
                             <Tooltip anchorSelect='#avatar' place='bottom'>User</Tooltip>
                         </span>
-                        {dropdownOpen && (
-                            <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
-                                {user ? (
-                                    <div className="py-1">
-                                        <span className="log-out flex items-center px-4 py-2 text-gray-700">
-                                           {`Hello ${user.username},`}
-                                        </span>
-                                        <span className="log-out flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer" onClick={handleLogOut}>
-                                            <LuLogOut className='mr-2' /> Log Out
-                                        </span>
-                                    </div>
-                                ) : (
-                                    <div className="py-1">
-                                        <Link to="/login" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleDropdown}>Login</Link>
-                                        <Link to="/signup" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleDropdown}>Sign Up</Link>
-                                    </div>
-                                )}
+                        {desktopDropdownOpen && (
+                                <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
+                                    {checkingAuth ? (
+                            <div className="py-1">
+                                <span className="flex items-center px-4 py-2 text-gray-700">
+                                    Please Wait...
+                                </span>
+                            </div>
+                        ) : user ? (
+                            <div className="py-1">
+                                <span className="log-out flex items-center px-4 py-2 text-gray-700">
+                                    {`Hello ${user.username},`}
+                                </span>
+                                <span className="log-out flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer" onClick={handleLogOut}>
+                                    <LuLogOut className='mr-2' /> Log Out
+                                </span>
+                            </div>
+                        ) : (
+                            <div className="py-1">
+                                <Link to="/login" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleDesktopDropdown}>Login</Link>
+                                <Link to="/signup" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={toggleDesktopDropdown}>Sign Up</Link>
                             </div>
                         )}
+                    </div>
+                    )}
             </li>
             {/* <li>
                 <Tooltip anchorSelect=".log-out" place="bottom" content='Log Out' />

@@ -318,7 +318,7 @@ const Manage = () => {
             </div>
 
           </div>
-          <button onClick={savePassword} className='bg-green-500 hover:bg-green-600 active:bg-green-900 flex flex-row gap-0.5  text-white rounded-full p-3 w-fit border border-gray-8 00'><MdAddToPhotos className='size-7'/><span className='font-bold text-lg'>Add An Entry</span></button>
+          <button onClick={savePassword} className='bg-green-500 dark:bg-green-600 dark:hover:bg-green-700 dark:active:bg-green-900 hover:bg-green-600 active:bg-green-900 flex flex-row gap-0.5  text-white rounded-full p-3 w-fit border border-gray-800'><MdAddToPhotos className='size-7'/><span className='font-bold text-lg'>Add An Entry</span></button>
       </div>  
 
       <div className="passwords">
