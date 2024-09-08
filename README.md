@@ -1,6 +1,6 @@
 # ShoobPass - Personalized Secure Password Manager
 
-ShoobPass is a secure and personalized password manager built with React and Vite. It allows users to store and manage their passwords securely using advanced cryptographic techniques. User might not want to create an account to save to cloud if he/she wishes to do so. Password entries are saved directly to your Local Storage for quick and efficient retrieval. Cloud Saving is completely optional.
+ShoobPass is a secure and personalized password manager built with MERN. It allows users to store and manage their passwords securely using advanced cryptographic techniques. User might not want to create an account to save to cloud if he/she wishes to do so. Password entries are saved directly to your Local Storage for quick and efficient retrieval. Cloud Saving is completely optional.
 
 ## Features
 
