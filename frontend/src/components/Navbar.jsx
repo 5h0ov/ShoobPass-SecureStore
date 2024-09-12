@@ -140,7 +140,7 @@ const Navbar = () => {
         </div> 
 
         <div className="md:hidden">
-                    <button onClick={toggleMobileMenu}>
+                    <button onClick={toggleMobileMenu} aria-label="Menu">
                         {!mobileMenuOpen ? <GiHamburgerMenu size={24} /> : <GiHamburgerMenu size={24} className='rotate-90 transition-all duration-100 ease-in-out' />}
                     </button>
         </div>

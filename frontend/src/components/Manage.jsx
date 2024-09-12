@@ -363,7 +363,7 @@ const Manage = () => {
                   ) : (
                     <>
                       {tablePasswordVisibility[item.id] ? item.password : '•'.repeat(item.password.length)}
-                      <button id={`show-${index}`} onClick={() => toggleTablePasswordVisibility(item.id)}>
+                      <button id={`show-${index}`} onClick={() => toggleTablePasswordVisibility(item.id)} aria-label="Show/Hide Passoword">
                         {tablePasswordVisibility[item.id] ? <MdVisibilityOff className='size-5 hover:scale-125' /> : <MdVisibility className='size-5 hover:scale-125' />}
                       </button>
                       <Tooltip anchorSelect={`#show-${index}`} place="top">{tablePasswordVisibility[item.id] ? 'Hide Password' : 'Show Password'}</Tooltip>
@@ -411,6 +411,7 @@ const Manage = () => {
           {Array.from({ length: totalPages }, (_, index) => (
             <button
               key={index}
+              aria-label="Page Number"
               onClick={() => handlePageChange(index + 1)}
               className={`mx-1 px-3 py-1 border rounded font-semibold ${
                 currentPage === index + 1
@@ -430,8 +431,8 @@ const Manage = () => {
             <h2 className="text-xl font-bold mb-4">Confirm Delete</h2>
             <p>Are you sure you want to delete this entry?</p>
             <div className="flex justify-end mt-4 font-bold">
-              <button className="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600 active:bg-red-800" onClick={deleteEntry}>Delete</button>
-              <button className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400 active:bg-gray-500" onClick={cancelDelete}>Cancel</button>
+              <button className="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600 active:bg-red-800" onClick={deleteEntry} aria-label="Delete Entry">Delete</button>
+              <button className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400 active:bg-gray-500" onClick={cancelDelete} aria-label="Cancel Delete">Cancel</button>
             </div>
           </div>
         </div>
