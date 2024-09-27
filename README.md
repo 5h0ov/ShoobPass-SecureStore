@@ -10,6 +10,7 @@ ShoobPass is a secure and personalized password manager built with MERN. It allo
 - Securely(using user's uniquely hashed password) Save and retrieve password entries to/from the cloud
 - Responsive and user-friendly interface
 - Pagination for organizing many entries
+- Redux has been used for global storage as I wanted to get my hands dirty in it
 
 ## Basic Encryption & Decryption
 
